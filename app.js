@@ -9,9 +9,7 @@ const routes = require('./routes/blogRoutes.js');
 
 // MongoDB
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf8'))
-const dbURI = config.dbURI;
-
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(config.dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 .then((result) => {
     console.log("Connected to db.");
     app.listen(3000);
@@ -36,6 +34,7 @@ app.use('/', routes);
 
 // 404
 app.use((req, res) => {
+    res.statusCode = 404;
     res.render('404', { title: "404" });
 });
 
